@@ -1,28 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <app-header></app-header> <!-- Bileşeni burada kullanıyorsunuz -->
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderWeb from './components/shared/HeaderWeb.vue';
+import FooterWeb from './components/shared/FooterWeb.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    'app-header': HeaderWeb, // 'app-header' adında kaydedildi
+    'app-footer': FooterWeb, // 'app-footer' adında kaydedildi
+  },
+  //frabase e kaydedildi
+  created(){
+    this.$store.dispatch("getTradeResult");
+    this.$store.dispatch("initApp"); // tetiklemek için
   }
-}
+};
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body{
+    background-color: #a7a0bb5c;
+  }
+  .fade-enter{
+    opacity: 0;
+  }
+  .fade-enter-active{
+    transition: opacity .3s ease-out;
+  }
+  .fade-leave-active{
+    transition: opacity.3s ease-out;
+    opacity: 0;
+  }
 </style>
